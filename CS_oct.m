@@ -48,26 +48,13 @@
 % Reference:
 % [1] Yang, X.-S., & Suash Deb. (2009). Cuckoo Search via Levy flights.
 %     In 2009 World Congress on Nature & Biologically Inspired Computing
-%     (NaBIC) (pp. 210�214). IEEE. http://doi.org/10.1109/NABIC.2009.5393690
+%     (NaBIC) (pp. 210-214). IEEE. http://doi.org/10.1109/NABIC.2009.5393690
 % --------------------------------------------------------------------------
 %
-% {Copyright (c) Jorge M. Cruz-Duarte. All rights reserved.}
-%
-% Departamento de Ingenier�a El�ctrica,
-% Divisi�n de Ingenier�as, Campus Irapuato-Salamanca,
-% Universidad de Guanajuato, Salamanca, Guanajuato, M�xico.
-%
-% Grupo de Investigaci�n CEMOS,
-% Escuela de Ingenier�as El�ctrica, Electr�nica y de Telecomunicaciones,
-% Universidad Industrial de Santander, Bucaramanga, Santander, Colombia.
-%
-% Modifications:
-%                   2015-jul ver :: v0
-%                   2016-apr ver :: v1
 %
 % Contact us: jorge.cruz@ugto.mx
 
-function [BestNest,fBest,details] = CS_oct(fObj,bnd,parameters)
+function [BestNest,fBest,details] = CS_oct(the_function,bnd,parameters)
 
 % Read parameters
 if nargin < 3,
@@ -76,10 +63,10 @@ if nargin < 3,
     Xi    = 1.5;                     % Xi parameter to calculate sigma
     Delta   = 0.1;                 % Step size scale factor
 
-    eps1    = 1e-1;
-    eps2    = 1e-3;
-    M       = 1e3;
-    msat    = 20;
+    eps1    = .5e0;
+    eps2    = 1e-12;
+    mIte    = 1e12;
+    mSat    = 100;
 
     unconst = false;
 else
@@ -90,33 +77,34 @@ else
 
     eps1    = parameters.EPS1;
     eps2    = parameters.EPS2;
-    M       = parameters.MITE;
-    msat    = parameters.MSAT;
+    mIte    = parameters.MITE;
+    mSat    = parameters.MSAT;
 
     unconst = parameters.UNCONST;
 end
 
+% Function's Nature
+if ischar(the_function) == 1,
+  fObj  = str2func(the_function);
+else
+  fObj  = the_function;
+endif
+
 % ------------------------------------------------------------- Initialise Block
-% Read problem's dimensions
-Nd          = size(bnd,1);
-
-% Sort and make-up boundaries
-bnd         = [min(bnd,[],2) max(bnd,[],2)];
-bnd_1       = ones(Na,1)*bnd(:,1)';
-bnd_2       = ones(Na,1)*bnd(:,2)';
-
-% Initialise nests
-Nests       = bnd_1 + rand(Na,Nd).*(bnd_2 - bnd_1);
+[Nd,bnd_1,bnd_2,Nests] = initialise(bnd,Na);
 
 % ------------------------------------------------------ Evaluate Function Block
 Fitness     = evaluateFunction(Na,fObj,Nests);
 
-% --------------------------------------------------------- Rank Positions Block
+% ------------------------------------------------------ Rank Positions Block
 [fBest,g]   = min(Fitness);
 BestNest    = Nests(g,:);
 
 % Set auxiliar variables
 steps       = 1;
+saturation  = 0;
+
+%data        = [steps,fBest,mean(Fitness),std(Fitness)]; % <----
 
 %% Main process
 do
@@ -143,7 +131,20 @@ do
     % Find the Nest best position (initial step)
     [fBest,g] = min(Fitness); BestNest = Nests(g,:);
 
-until steps++ >= M,
+    % Check convergence
+    [condition,saturation] = stopCriteria(fBest,BestNest,Fitness,...
+                              Nests,saturation,eps1,eps2,mSat);
+
+    % Increase steps
+    steps++;
+
+%    data        = [data;[steps,fBest,mean(Fitness),std(Fitness)]]; % <----
+until (steps > mIte) || condition,
 --steps,
+%figure,
+%plot(data(:,1),data(:,3),'.k'), hold on,
+%plot(data(:,1),data(:,3)-1*data(:,4),'.','Color',[.75 .75 .75]),
+%plot(data(:,1),data(:,2),'.r'), hold off,
+%ylim([0 10])
 
 endfunction

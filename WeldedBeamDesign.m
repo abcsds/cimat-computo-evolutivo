@@ -16,6 +16,11 @@ Tau_max   = 13600;    % in psi
 Sigma_max = 30000;    % in psi
 Delta_max = 0.25;     % in in
 
+% Adjust to integer variables
+% --
+x(1)  = fix(x(1))*0.0065;
+x(2)  = fix(x(2))*0.0065;
+
 % Some parameters:
 % --
 M     = P*(L + x(2)/2);
@@ -45,13 +50,13 @@ Delta = 4*P*L^3/(E*x(3)^3*x(4));
 cost  =  1.10471*x(1)^2*x(2) + 0.04811*x(3)*x(4)*(14 + x(2));
 
 % Constraints (g(i) <= 0)
-constraints(1)  = Tau - Tau_max;
-constraints(2)  = Sigma - Sigma_max;
-constraints(3)  = x(1) - x(4);
-constraints(4)  = 0.10471*x(1)^2 + 0.04811*x(3)*x(4)*(14 + x(2)) - 5;
-constraints(5)  = 0.125 - x(1);
-constraints(6)  = Delta - Delta_max;
-constraints(7)  = P - Pc;
+constraints     = [ Tau - Tau_max;
+                    Sigma - Sigma_max;
+                    x(1) - x(4);
+                    0.10471*x(1)^2 + 0.04811*x(3)*x(4)*(14 + x(2)) - 5;
+                    0.125 - x(1);
+                    Delta - Delta_max;
+                    P - Pc];
 
 % Penalty function
-fObj  = cost + sum(max(constraints,0));
+fObj  = cost + 10*sum(max(constraints,0));

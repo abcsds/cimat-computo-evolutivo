@@ -10,23 +10,41 @@
 
 % Benchmark functions:
 % --
+% 0. Sphere from [1]
+%[optX,optF] = CS_oct(@Sphere,ones(2,1)*[-10 10])
+%
 % 1. Ackley 1 from [1]
 %Nd          = 2;
-%[optX,optF] = CS_oct(@(x) Ackley1(x),ones(Nd,1)*[-35 35])
+%[optX,optF] = CS_oct(@Ackley1,ones(Nd,1)*[-35 35])
 
 % 2. Beale from [1]
-[optX,optF] = CS_oct(@(x) Beale(x),ones(2,1)*[-35 35])
+%[optX,optF] = CS_oct(@Beale,ones(2,1)*[-35 35])
 
 % 3. Bird from [1]
-[optX,optF] = CS_oct(@(x) Bird(x),ones(2,1)*[-2*pi 2*pi])
+%[optX,optF] = CS_oct(@Bird,ones(2,1)*[-2*pi 2*pi])
 
 % 4. Rosenbrock from [1]
-[optX,optF] = CS_oct(@(x) Rosenbrock(x),ones(2,1)*[-30 30])
+%[optX,optF] = CS_oct(@Rosenbrock,ones(2,1)*[-30 30])
 
 % 5. Rastrigin from [2]
-%[optX,optF] = CS_oct(@(x) Rastrigin(x),ones(2,1)*[-1 1])
+%[optX,optF] = CS_oct(@Rastrigin,ones(2,1)*[-1 1])
+
+% 6. Weierstrass from [2]
+%[optX,optF] = CS_oct(@Weierstrass,ones(2,1)*[-.5 .5])
 
 % Benchmark problems:
 % --
 % 1. Welded Beam Design from [3]
-%[optX,optF] = CS_oct(@(x) WeldedBeamDesign(x),ones(4,1)*[0.1 10])
+boundaries  = [ceil(0.125/0.0065),floor(5/0.0065);
+               ceil(0.1/0.0065),floor(10/0.0065);
+               0.1,10; 0.1,10];
+[optX,optF] = CS_oct(@WeldedBeamDesign,boundaries);
+optX(1,1:2)   = fix(optX(1,1:2))*0.0065;
+optX,optF,
+
+
+% 2. Spring Design from [3]
+%boundaries  = [0.05 1; 0.25 1.3; 2 15];
+%[optX,optF] = CS_oct(@SpringDesign,boundaries);
+%optX(1,3)   = fix(optX(1,3));
+%optX,optF,
