@@ -1,8 +1,8 @@
 <h1> Algoritmo Cuckoo Search: Implementación y pruebas preliminares </h1>
 
-Aquí encontrará el material de trabajo para curso "<i>Algoritmo Cuckoo Search: Implementación y pruebas preliminares</i>".
+En este repositorio encontrará el material de trabajo para curso "<i>Algoritmo Cuckoo Search: Implementación y pruebas preliminares</i>".
 
-Este material fue planeado para ser ejecutado en <b>GNU Octave v4.0.3</b>. Octave se puede descargar GRATIS <a href="https://www.gnu.org/software/octave/">aquí</a>.
+El material fue planeado para ser ejecutado en <b>GNU Octave v4.0.3</b>. Octave se puede descargar GRATIS <a href="https://www.gnu.org/software/octave/">aquí</a>.
 
 <b>(Opcional)</b>: Se le sugiere utilizar <i>Atom v1.11.2</i>, disponible (también GRATIS) <a href="https://atom.io/">aquí</a>, si no posee un editor de código favorito.
 
