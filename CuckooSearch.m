@@ -1,13 +1,13 @@
 %% Cuckoo Search via L'evy Flight method [1]
 %
-% CS - performs a metaheuristic procedure to solve a simple-constrained
+% It performs a metaheuristic procedure to solve a simple-constrained
 %        optimisation problem, such as:
 %
 %                min FOBJ(X),    where X = [X_1, X_2, ..., X_Nd]',
 %                 X
 %                 subject to     X_lb <= X <= X_ub,
 %
-% XOPT = cuckooSearch(FOBJ,BOUNDARIES) searchs a simple-constrained minimal
+% XOPT = CuckooSearch(FOBJ,BOUNDARIES) searchs a simple-constrained minimal
 % XOPT of the fitness function (or objective function) FOBJ. The feasible
 % region is drawn by the simple constraints given by BOUNDARIES. BOUNDARIES
 % is a matrix of Nd-by-2, where Nd is the number of dimensions or variables.
