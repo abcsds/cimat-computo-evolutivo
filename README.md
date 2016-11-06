@@ -9,6 +9,7 @@ Este material fue planeado para ser ejecutado en <b>GNU Octave v4.0.3</b>. Octav
 <hr>
 <b> Para tener en cuenta</b>
 <ol> 
-<li> El script principal a completar es <a href="https://github.com/jcrvz/cimat-computo-evolutivo/blob/master/CuckooSearch.m">CuckooSearch.m</a>.
-<li> En <a href="https://github.com/jcrvz/cimat-computo-evolutivo/blob/master/Exercises.m">Exercises.m</a> podrá encontrar algunos ejemplos sobre la ejecución del método. 
+<li> Las diapositivas relacionadas con el curso se encuentran en <a href="Slides_CuckooSearch_ECECIMAT.pdf">Slides_CuckooSearch_ECECIMAT.pdf</a>.
+<li> El script principal a completar es <a href="CuckooSearch.m">CuckooSearch.m</a>.
+<li> Algunos ejemplos sobre la ejecución del método se encuentran en <a href="Exercises.m">Exercises.m</a>.
 </ol>
